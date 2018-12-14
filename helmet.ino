@@ -1,8 +1,7 @@
 #include <SPI.h>
 #include <Wire.h>
-#include <Adafruit_Sensor.h>
 #include <Adafruit_LSM9DS0.h>
-#include <Adafruit_NeoPixel.h>
+#include "Adafruit_NeoPixel_Custom.h"
 
 #define PIN 6
 #define RED   strip.Color(0xFF,0x00,0x00)
@@ -18,7 +17,7 @@
 #define OUTPUT_MODE_LEFT_TURN  2
 #define OUTPUT_MODE_RIGHT_TURN 3
 
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(60, PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel_Custom strip = Adafruit_NeoPixel_Custom(60, PIN, NEO_GRB + NEO_KHZ800);
 Adafruit_LSM9DS0 lsm = Adafruit_LSM9DS0(1000);
 uint8_t input_mode  = INPUT_MODE_NONE;
 uint8_t output_mode = OUTPUT_MODE_NORMAL;
@@ -181,4 +180,3 @@ void pattern_disco()
     strip.show();
   }
 }
-
