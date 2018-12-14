@@ -8,6 +8,7 @@
 #define AMBER strip.Color(0xFF,0x37,0x00)
 #define WHITE strip.Color(0xFF,0xFF,0xFF)
 #define BLACK strip.Color(0,0,0)
+#define GREEN strip.Color(0x00,0xFF,0x00)
 #define PERIOD 2500
 
 #define INPUT_MODE_NONE 1
@@ -89,7 +90,8 @@ void loop() {
   }
   */
   
-  pattern_default();
+  //pattern_default();
+  pattern_xmas();
   strip.show();
 //  delay(10);
 }
@@ -169,7 +171,7 @@ void pattern_right_turn()
 
 void pattern_disco()
 {
-  for (int i=0; i<48; i++) {
+  for (int i=0; i<=48; i++) {
     strip.setPixelColor(
       i,
       strip.Color(random(0x00,0xFF),
@@ -178,5 +180,59 @@ void pattern_disco()
       random(0xF0,0xFF)
     );
     strip.show();
+  }
+}
+
+void pattern_xmas()
+{
+  int a = 0;
+  int b = 47;
+  uint32_t color = GREEN;
+  uint8_t brightness = 0xFF;
+  uint8_t width = 3;
+  
+  int count = abs(a-b)+1;
+  float t = (float)(millis()%4000)/4000;
+  float centera = (float)count * (t-1);
+  float centerb = (float)count * (t);
+  float centerc = (float)count * (t+1);
+  
+  for (int i = 0; i < count; i++) {
+    float f = 0
+            + max(0,(1-abs(centera-i)/width))
+            + max(0,(1-abs(centerb-i)/width))
+            + max(0,(1-abs(centerc-i)/width))
+            + max(0,(1-abs(centera+12-i)/width))
+            + max(0,(1-abs(centerb+12-i)/width))
+            + max(0,(1-abs(centerc+12-i)/width))
+            + max(0,(1-abs(centera+24-i)/width))
+            + max(0,(1-abs(centerb+24-i)/width))
+            + max(0,(1-abs(centerc+24-i)/width))
+            + max(0,(1-abs(centera+36-i)/width))
+            + max(0,(1-abs(centerb+36-i)/width))
+            + max(0,(1-abs(centerc+36-i)/width))
+            ;
+    color = RED;
+    if (f <= 0) {
+      f = 0
+          + max(0,(1-abs(centera+6-i)/width))
+          + max(0,(1-abs(centerb+6-i)/width))
+          + max(0,(1-abs(centerc+6-i)/width))
+          + max(0,(1-abs(centera+18-i)/width))
+          + max(0,(1-abs(centerb+18-i)/width))
+          + max(0,(1-abs(centerc+18-i)/width))
+          + max(0,(1-abs(centera+30-i)/width))
+          + max(0,(1-abs(centerb+30-i)/width))
+          + max(0,(1-abs(centerc+30-i)/width))
+          + max(0,(1-abs(centera+42-i)/width))
+          + max(0,(1-abs(centerb+42-i)/width))
+          + max(0,(1-abs(centerc+42-i)/width))
+          ;
+      color = GREEN;
+    }
+    f = pow(f,2.5);
+    
+    int pixel = map(i, 0, count-1, a, b);
+    strip.setPixelColor(pixel, color, f*brightness);
   }
 }
